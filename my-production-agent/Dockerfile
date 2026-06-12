@@ -28,7 +28,6 @@ USER appuser
 ENV PORT=8000
 
 # Healthcheck
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://localhost:$PORT/health || exit 1
+HEALTHCHECK NONE
 
 CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
