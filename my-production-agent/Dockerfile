@@ -19,7 +19,7 @@ WORKDIR /app
 
 # Copy dependencies from builder
 
-COPY --from=builder /root/.local /home/appuser/.local
+COPY --chown=appuser:appuser --from=builder /root/.local /home/appuser/.local
 
 # Copy application code
 
@@ -29,6 +29,7 @@ COPY app/ ./app/
 
 ENV PATH=/home/appuser/.local/bin:$PATH
 ENV PORT=8000
+ENV PYTHONUNBUFFERED=1
 
 # Permissions
 
