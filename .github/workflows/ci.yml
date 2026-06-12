@@ -1,0 +1,28 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Lấy mã nguồn (Checkout code)
+      uses: actions/checkout@v4
+
+    - name: Cài đặt Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Chấm điểm kiến trúc (Check Production Ready)
+      working-directory: ./my-production-agent
+      run: python check_production_ready.py
+
+    - name: Kiểm tra Build Docker Image
+      working-directory: ./my-production-agent
+      run: docker build -t my-production-agent:test .
